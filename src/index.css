@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #040711;
+    color: #e2e8f0;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Custom Cyberpunk & Holographic Styling */
+.cyber-box {
+  background: rgba(13, 19, 34, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 240, 255, 0.05);
+}
+
+.cyber-box-magenta {
+  background: rgba(20, 10, 28, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 0, 127, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 0, 127, 0.05);
+}
+
+.cyber-box-gold {
+  background: rgba(26, 20, 10, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(234, 179, 8, 0.08);
+}
+
+.cyber-glow-cyan {
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+}
+
+.cyber-glow-magenta {
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+}
+
+.cyber-glow-green {
+  box-shadow: 0 0 20px rgba(0, 255, 102, 0.4);
+}
+
+.clip-corner {
+  clip-path: polygon(
+    0 12px,
+    12px 0,
+    100% 0,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    0 100%
+  );
+}
+
+.scanline-overlay {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #040711;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00f0ff;
+}
