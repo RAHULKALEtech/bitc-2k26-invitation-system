@@ -18,6 +18,7 @@ export const InvitationChatbotVideo: React.FC<InvitationChatbotVideoProps> = ({
   useEffect(() => {
     if (isInvitationRevealed && videoRef.current) {
       videoRef.current.currentTime = 0;
+      videoRef.current.playbackRate = 0.85; // Smooth, clear, steady speed
       videoRef.current.play().catch((err) => {
         console.warn('Autoplay prevented by browser policy:', err);
       });

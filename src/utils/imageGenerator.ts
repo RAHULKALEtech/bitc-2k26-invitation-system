@@ -59,11 +59,11 @@ export async function generateInvitationImage(faculty: Faculty): Promise<Blob> {
     ctx.fillText('B!T-C 2K26', 600, 230);
     ctx.shadowBlur = 0;
 
-    // Subtitle: INVITATION
+    // Subtitle: EXCLUSIVE INVITATION
     ctx.fillStyle = '#ff007f';
     ctx.font = '700 48px Cinzel, serif';
     ctx.letterSpacing = '8px';
-    ctx.fillText('EXCLUSIVE FACULTY INVITATION', 600, 310);
+    ctx.fillText('EXCLUSIVE INVITATION', 600, 310);
 
     // Draw Faculty Photo (or Avatar placeholder if blank)
     const drawContentAfterPhoto = () => {
@@ -128,15 +128,70 @@ export async function generateInvitationImage(faculty: Faculty): Promise<Blob> {
         }
       });
 
-      // Footer
-      ctx.fillStyle = '#00f0ff';
-      ctx.font = '700 28px Orbitron, sans-serif';
-      ctx.fillText('B!T-C 2K26 SYSTEM', 600, 1500);
+      // Circular JSDR Logo & Footer
+      const logoY = 1370;
+      const logoRadius = 85;
 
-      canvas.toBlob((blob) => {
-        if (blob) resolve(blob);
-        else reject(new Error('Canvas blob generation failed'));
-      }, 'image/png');
+      const finishBlob = () => {
+        // Footer text
+        ctx.fillStyle = '#00f0ff';
+        ctx.font = '700 28px Orbitron, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.shadowColor = 'rgba(0, 240, 255, 0.6)';
+        ctx.shadowBlur = 15;
+        ctx.fillText('B!T-C 2K26 SYSTEM', 600, 1515);
+        ctx.shadowBlur = 0;
+
+        canvas.toBlob((blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error('Canvas blob generation failed'));
+        }, 'image/png');
+      };
+
+      const logoImg = new Image();
+      logoImg.crossOrigin = 'anonymous';
+
+      const drawLogoFrame = (hasImage: boolean) => {
+        ctx.save();
+
+        // Glow effects around circular logo frame
+        ctx.shadowColor = 'rgba(255, 215, 0, 0.7)';
+        ctx.shadowBlur = 25;
+
+        // Outer Metallic Gold Ring
+        ctx.strokeStyle = '#ffd700';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(600, logoY, logoRadius + 5, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.shadowBlur = 0;
+
+        // Inner circle background
+        ctx.fillStyle = '#040711';
+        ctx.beginPath();
+        ctx.arc(600, logoY, logoRadius, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (hasImage) {
+          ctx.beginPath();
+          ctx.arc(600, logoY, logoRadius, 0, Math.PI * 2);
+          ctx.clip();
+          ctx.drawImage(logoImg, 600 - logoRadius, logoY - logoRadius, logoRadius * 2, logoRadius * 2);
+        } else {
+          ctx.fillStyle = '#ffd700';
+          ctx.font = '900 36px Orbitron, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('BIT-C', 600, logoY + 12);
+        }
+
+        ctx.restore();
+        finishBlob();
+      };
+
+      logoImg.onload = () => drawLogoFrame(true);
+      logoImg.onerror = () => drawLogoFrame(false);
+      logoImg.src = '/jsdRlogo.png';
     };
 
     if (faculty.photo) {

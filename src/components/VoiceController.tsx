@@ -30,8 +30,25 @@ export const VoiceController: React.FC<VoiceControllerProps> = ({
     window.speechSynthesis.cancel(); // Reset previous speech
 
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
-    utterance.rate = 0.95;
+    utterance.rate = 0.82; // Slow and clear speech rate for easy understanding
     utterance.pitch = 1.0;
+
+    // Select clearest English voice available
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(
+      (v) =>
+        v.lang.startsWith('en') &&
+        (v.name.includes('Natural') ||
+          v.name.includes('Google') ||
+          v.name.includes('Samantha') ||
+          v.name.includes('Zira') ||
+          v.name.includes('Karen') ||
+          v.name.includes('Daniel'))
+    ) || voices.find((v) => v.lang.startsWith('en'));
+
+    if (preferredVoice) {
+      utterance.voice = preferredVoice;
+    }
 
     utterance.onstart = () => {
       setIsPlaying(true);
