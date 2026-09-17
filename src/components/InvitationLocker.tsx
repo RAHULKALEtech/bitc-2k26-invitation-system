@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Lock, Key, ShieldCheck, ShieldAlert, Sparkles, Loader2, ArrowLeft } from 'lucide-react';
+import { Lock, Key, ShieldCheck, ShieldAlert, Sparkles, Loader2, ArrowLeft, Volume2, VolumeX } from 'lucide-react';
 import { Faculty } from '../types';
 import { cyberAudio } from '../utils/audio';
 
@@ -19,6 +19,33 @@ export const InvitationLocker: React.FC<InvitationLockerProps> = ({
   const [isVerifying, setIsVerifying] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [verifiedMsg, setVerifiedMsg] = useState('');
+  const [isMuted, setIsMuted] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Auto-play background video with audio
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.muted = false;
+      videoRef.current.play().then(() => {
+        setIsMuted(false);
+      }).catch((err) => {
+        console.warn('Autoplay with sound prevented by browser policy, fallback to muted play:', err);
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          setIsMuted(true);
+          videoRef.current.play();
+        }
+      });
+    }
+  }, []);
+
+  const toggleAudio = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
 
   // Configurable code for invitation vault unlock (Default is BITC2026 or 2026 or 72485)
   const VALID_CODES = ['BITC2026', '2026', 'Ramrk@72485', 'BITC', 'INVITE'];
@@ -47,11 +74,46 @@ export const InvitationLocker: React.FC<InvitationLockerProps> = ({
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-65px)] flex items-center justify-center p-4 bg-cyber-dark overflow-hidden">
-      {/* Rotating Holographic Rings background */}
-      <div className="absolute inset-0 bg-cyber-grid bg-[size:40px_40px] opacity-20 pointer-events-none" />
-      <div className="absolute w-[500px] h-[500px] border border-cyan-500/20 rounded-full animate-spin-slow pointer-events-none" />
-      <div className="absolute w-[350px] h-[350px] border border-pink-500/20 rounded-full animate-pulse-glow pointer-events-none" />
+    <div className="relative min-h-[calc(100vh-65px)] flex items-center justify-center p-4 bg-black overflow-hidden select-none">
+      {/* Background Video: jsdR500.mp4 with sound */}
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        playsInline
+        controls={false}
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+        style={{
+          filter: 'contrast(1.05) brightness(0.95)',
+        }}
+      >
+        <source src="/jsdR500.mp4" type="video/mp4" />
+        <source src="jsdR500.mp4" type="video/mp4" />
+      </video>
+
+      {/* Ambient Dark Overlay */}
+      <div className="absolute inset-0 bg-black/35 pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-cyber-grid bg-[size:40px_40px] opacity-15 pointer-events-none z-0" />
+
+      {/* Audio Control Toggle Button */}
+      <button
+        onClick={toggleAudio}
+        className="absolute top-4 right-4 z-30 flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-slate-900/85 border border-cyan-500/40 text-cyan-300 hover:text-white font-mono text-xs backdrop-blur-md transition shadow-[0_0_15px_rgba(0,240,255,0.3)] cursor-pointer"
+        title={isMuted ? 'Click to Enable Video Sound' : 'Mute Video Sound'}
+      >
+        {isMuted ? (
+          <>
+            <VolumeX className="h-4 w-4 text-rose-400" />
+            <span>ENABLE VIDEO SOUND</span>
+          </>
+        ) : (
+          <>
+            <Volume2 className="h-4 w-4 text-cyan-400 animate-pulse" />
+            <span>SOUND ENABLED</span>
+          </>
+        )}
+      </button>
 
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
@@ -77,9 +139,6 @@ export const InvitationLocker: React.FC<InvitationLockerProps> = ({
             <h2 className="font-display text-2xl sm:text-3xl font-black text-cyan-400 tracking-wider">
               SECURE INVITATION VAULT
             </h2>
-            <p className="font-mono text-xs text-gray-400 mt-1">
-              PERSONALIZED FOR: <span className="text-white font-bold">{faculty.name}</span>
-            </p>
           </div>
         </div>
 

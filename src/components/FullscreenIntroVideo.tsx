@@ -9,7 +9,7 @@ interface FullscreenIntroVideoProps {
 
 export const FullscreenIntroVideo: React.FC<FullscreenIntroVideoProps> = ({
   onComplete,
-  videoSrc = '/jsdR2.mp4',
+  videoSrc = '/jsdR25_5.mp4',
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isMuted, setIsMuted] = useState(false);
@@ -68,7 +68,9 @@ export const FullscreenIntroVideo: React.FC<FullscreenIntroVideoProps> = ({
         }}
       >
         <source src={videoSrc} type="video/mp4" />
-        <source src="/jsdR2.mp4" type="video/mp4" />
+        <source src="/jsdR25_5.mp4" type="video/mp4" />
+        <source src="/jsdR25 (5).mp4" type="video/mp4" />
+        <source src="/jsdR500.mp4" type="video/mp4" />
       </video>
 
       {/* Top Banner Tag */}
