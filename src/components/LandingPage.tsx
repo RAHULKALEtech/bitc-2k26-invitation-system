@@ -159,11 +159,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onSelectMode }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="pt-6 font-mono text-xs text-center"
+          className="pt-6 font-mono text-xs text-center space-y-1"
         >
           <div className="flex items-center justify-center space-x-1.5 font-bold text-cyan-400">
             <ShieldCheck className="h-4 w-4 text-emerald-400" />
-            <span>B!T-C 2K26 SYSTEM</span>
+            <span>B!TC 2k26 Invitation System</span>
+          </div>
+          <div className="text-gray-400 text-[11px]">
+            Developed by Rahul Sunil kale and INVITATION Committee
           </div>
         </motion.div>
       </div>

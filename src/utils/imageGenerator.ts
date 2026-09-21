@@ -139,8 +139,12 @@ export async function generateInvitationImage(faculty: Faculty): Promise<Blob> {
         ctx.textAlign = 'center';
         ctx.shadowColor = 'rgba(0, 240, 255, 0.6)';
         ctx.shadowBlur = 15;
-        ctx.fillText('B!T-C 2K26 SYSTEM', 600, 1515);
+        ctx.fillText('B!TC 2k26 Invitation System', 600, 1500);
         ctx.shadowBlur = 0;
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '500 20px Inter, sans-serif';
+        ctx.fillText('Developed by Rahul Sunil kale and INVITATION Committee', 600, 1535);
 
         canvas.toBlob((blob) => {
           if (blob) resolve(blob);

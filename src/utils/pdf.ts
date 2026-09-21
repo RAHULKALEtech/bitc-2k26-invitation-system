@@ -90,10 +90,15 @@ export function generatePDFReport(facultyList: Faculty[]) {
 
   // Footer Note
   const finalY = (doc as any).lastAutoTable?.finalY || 200;
-  doc.setFontSize(9);
+  doc.setFontSize(10);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(0, 150, 255);
-  doc.text('B!T-C 2K26 SYSTEM', 14, finalY + 12);
+  doc.text('B!TC 2k26 Invitation System', 14, finalY + 12);
+
+  doc.setFontSize(8.5);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(100, 116, 139);
+  doc.text('Developed by Rahul Sunil kale and INVITATION Committee', 14, finalY + 17);
 
   doc.save(`BIT-C_2K26_Invitation_Report_${Date.now()}.pdf`);
 }

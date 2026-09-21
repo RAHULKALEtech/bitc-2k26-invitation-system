@@ -318,8 +318,9 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
           </div>
 
           {/* Footer */}
-          <div className="relative z-10 pt-4 border-t border-slate-800/80 font-mono text-xs text-center">
-            <p className="font-bold text-cyan-400 tracking-wider">B!T-C 2K26 SYSTEM</p>
+          <div className="relative z-10 pt-4 border-t border-slate-800/80 font-mono text-xs text-center space-y-1">
+            <p className="font-bold text-cyan-400 tracking-wider">B!TC 2k26 Invitation System</p>
+            <p className="text-gray-400 text-[11px]">Developed by Rahul Sunil kale and INVITATION Committee</p>
           </div>
         </motion.div>
       </div>
