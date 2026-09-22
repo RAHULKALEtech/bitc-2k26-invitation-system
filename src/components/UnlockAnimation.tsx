@@ -10,7 +10,7 @@ interface UnlockAnimationProps {
 
 export const UnlockAnimation: React.FC<UnlockAnimationProps> = ({
   onComplete,
-  videoSrc = '/jsdR100000.mp4',
+  videoSrc = '/jsdR10000.mp4',
 }) => {
   const [stage, setStage] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
@@ -86,7 +86,7 @@ export const UnlockAnimation: React.FC<UnlockAnimationProps> = ({
         }}
       >
         <source src={videoSrc} type="video/mp4" />
-        <source src="/jsdR100000.mp4" type="video/mp4" />
+        <source src="/jsdR10000.mp4" type="video/mp4" />
         <source src="/jsdR500.mp4" type="video/mp4" />
         <source src="/jsdR25_5.mp4" type="video/mp4" />
       </video>
